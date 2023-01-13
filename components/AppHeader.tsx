@@ -1,9 +1,14 @@
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useCartStore } from "../store/CartStore";
 
 export default function AppHeader() {
-  const cartItems = useCartStore((x: CartItem) => x.cartItems);
-  console.log(cartItems);
+  const [count, setCount] = useState(0);
+  const cartItems = useCartStore((x: any) => x.cartItems);
+
+  useEffect(() => {
+    setCount(cartItems.length);
+  }, [cartItems]);
 
   return (
     <header className=" bg-gray-100 border-b-2 border-black fixed w-full z-50">
@@ -31,10 +36,10 @@ export default function AppHeader() {
           </Link>
 
           <Link href="/cart" title="Cart" className="p-1">
-            {!!cartItems.length && (
+            {!!count && (
               <div className="absolute -mt-2 ml-4">
                 <div className="text-xs h-6 w-6 rounded-full bg-red-500 text-white text-center flex justify-center items-center font-medium">
-                  {cartItems.length}
+                  {count}
                 </div>
               </div>
             )}
