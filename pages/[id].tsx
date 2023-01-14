@@ -86,7 +86,7 @@ export default function Homepage() {
                 ) : (
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="p-1 px-4 border-2 border-black font-medium text-lg bg-black/20 hover:bg-black hover:text-white"
+                    className="p-2 px-4 border-2 border-black text-sm font-medium bg-black/20 hover:bg-black hover:text-white"
                   >
                     ADD TO CART
                   </button>
