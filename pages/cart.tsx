@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCartStore } from "../store/CartStore";
 
-export default function Homepage() {
+export default function CartPage() {
   const cartItems = useCartStore((x: any) => x.cartItems);
   const UPDATE_CART = useCartStore((x: any) => x.UPDATE_CART);
 
@@ -10,11 +10,11 @@ export default function Homepage() {
   const [products, setProducts] = useState<ProductType[]>([]);
 
   const totalItems = () => {
-    return products.reduce((prev: number, el: ProductType) => prev + +el.quantity, 0);
+    return products.reduce((prev: number, el: ProductType) => prev + el.quantity, 0);
   };
 
   const subTotal = () => {
-    return products.reduce((prev: number, el) => prev + +el.price * +el.quantity, 0);
+    return products.reduce((prev: number, el: ProductType) => prev + +el.price * el.quantity, 0);
   };
 
   const fetchData = async () => {
@@ -29,10 +29,10 @@ export default function Homepage() {
     setProducts(_products);
   };
 
-  const updateCart = (i: number, qty: number) => {
+  const updateCart = (index: number, qty: number) => {
     const payload = products;
-    payload[i].quantity = qty;
-    const result = payload.filter((x) => x?.quantity > 0);
+    payload[index].quantity = qty;
+    const result = payload.filter((x: ProductType) => x?.quantity > 0);
 
     setProducts(result);
     UPDATE_CART(result);
@@ -63,7 +63,7 @@ export default function Homepage() {
               <div className="md:flex gap-4 md:gap-8 p-4">
                 <div className="">
                   <div className="grid grid-cols-1 gap-4">
-                    {products.map((product, i) => (
+                    {products.map((product: ProductType, i) => (
                       <div key={i} className="flex gap-4 border-4 border-black p-4">
                         <div className="">
                           <div
@@ -74,23 +74,30 @@ export default function Homepage() {
 
                         <div className="flex-grow flex flex-col justify-between gap-4">
                           <div className="capitalize text-sm font-medium">{product.title}</div>
+                          <div className="text-sm text-gray-700 font-medium">₦ {product.price.toLocaleString()}</div>
                           <div className="flex gap-4 items-center justify-between">
-                            <div className="text-sm text-gray-700 font-medium">₦ {product.price.toLocaleString()}</div>
                             <div className="flex items-center gap-1">
                               <button
                                 onClick={() => updateCart(i, product.quantity > 0 ? product.quantity - 1 : 0)}
-                                className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-lg hover:bg-black hover:text-white"
+                                className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-sm hover:bg-black hover:text-white"
                               >
                                 -
                               </button>
                               <p className="px-4 text-sm">{product.quantity}</p>
                               <button
                                 onClick={() => updateCart(i, product.quantity + 1)}
-                                className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-lg hover:bg-black hover:text-white"
+                                className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-sm hover:bg-black hover:text-white"
                               >
                                 +
                               </button>
                             </div>
+
+                            <button
+                              onClick={() => updateCart(i, 0)}
+                              className="p-1 px-4 border-2 border-red-500 bg-red-200 font-medium text-xs hover:bg-red-500 hover:text-white"
+                            >
+                              DELETE
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -169,4 +176,5 @@ interface ProductType {
   image: string;
   category: string;
   description: string;
+  quantity: number;
 }

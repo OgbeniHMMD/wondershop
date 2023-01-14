@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useCartStore } from "../store/CartStore";
 
-export default function Homepage() {
+export default function ProductDetailsPage() {
   const router = useRouter();
   const { id } = router.query;
 
@@ -60,29 +60,38 @@ export default function Homepage() {
               />
             </div>
 
-            <div className="flex flex-col gap-4 justify-between">
+            <div className="flex flex-col gap-4 justify-between w-full">
               <div className="">
                 <div className="text-xl font-medium pb-4">{product.title}</div>
                 <div className="font-medium text-sm text-gray-500">₦ {product.price.toLocaleString()}</div>
               </div>
 
-              <div className="flex gap-2 text-sm items-center">
+              <div className="">
                 {quantity ? (
-                  <>
+                  <div className="flex justify-between w-full">
+                    <div className="flex gap-2 text-sm items-center">
+                      <button
+                        onClick={() => setQuantity(quantity > 0 ? quantity - 1 : 0)}
+                        className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-sm hover:bg-black hover:text-white"
+                      >
+                        -
+                      </button>
+                      <p className="p-2">{quantity}</p>
+                      <button
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-sm hover:bg-black hover:text-white"
+                      >
+                        +
+                      </button>
+                    </div>
+
                     <button
-                      onClick={() => setQuantity(quantity > 0 ? quantity - 1 : 0)}
-                      className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-lg hover:bg-black hover:text-white"
+                      onClick={() => setQuantity(0)}
+                      className="p-1 px-4 border-2 border-red-500 bg-red-200 font-medium text-sm hover:bg-red-500 hover:text-white"
                     >
-                      -
+                      DELETE
                     </button>
-                    <p className="p-2">{quantity}</p>
-                    <button
-                      onClick={() => setQuantity(quantity + 1)}
-                      className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-lg hover:bg-black hover:text-white"
-                    >
-                      +
-                    </button>
-                  </>
+                  </div>
                 ) : (
                   <button
                     onClick={() => setQuantity(quantity + 1)}
