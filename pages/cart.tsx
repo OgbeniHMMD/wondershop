@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ProductType } from ".";
 import { useCartStore } from "../store/CartStore";
 
 export default function Homepage() {
   const cartItems = useCartStore((x: any) => x.cartItems);
-  const [products, setProducts] = useState<product[]>([]);
+  const UPDATE_CART = useCartStore((x: any) => x.UPDATE_CART);
+  const [products, setProducts] = useState<ProductType[]>([]);
 
   const totalItems = () => {
-    return products.reduce((prev: number, el) => prev + +el.quantity, 0);
+    return products.reduce((prev: number, el: ProductType) => prev + +el.quantity, 0);
   };
 
   const subTotal = () => {
@@ -23,6 +25,15 @@ export default function Homepage() {
     }
 
     setProducts(_products);
+  };
+
+  const updateCart = (i: number, qty: number) => {
+    const payload = products;
+    payload[i].quantity = qty;
+    const result = payload.filter((x) => x?.quantity > 0);
+
+    setProducts(result);
+    UPDATE_CART(result);
   };
 
   useEffect(() => {
@@ -63,11 +74,17 @@ export default function Homepage() {
                         <div className="flex gap-4 items-center justify-between">
                           <div className="text-sm text-gray-700 font-medium">₦ {product.price.toLocaleString()}</div>
                           <div className="flex items-center gap-1">
-                            <button className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-lg hover:bg-black hover:text-white">
+                            <button
+                              onClick={() => updateCart(i, product.quantity > 0 ? product.quantity - 1 : 0)}
+                              className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-lg hover:bg-black hover:text-white"
+                            >
                               -
                             </button>
                             <p className="px-4 text-sm">{product.quantity}</p>
-                            <button className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-lg hover:bg-black hover:text-white">
+                            <button
+                              onClick={() => updateCart(i, product.quantity + 1)}
+                              className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-lg hover:bg-black hover:text-white"
+                            >
                               +
                             </button>
                           </div>
@@ -91,7 +108,7 @@ export default function Homepage() {
                       <div>₦ 0.00</div>
                     </div>
 
-                    <div className="flex justify-between gap-4 border-t pt-2">
+                    <div className="flex justify-between gap-4 border-t-2 pt-2">
                       <div className="text-lg font-medium">Order total:</div>
                       <div>₦ {subTotal().toLocaleString()}</div>
                     </div>
