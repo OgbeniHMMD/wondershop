@@ -11,7 +11,7 @@ export default function AppHeader() {
   }, [cartItems]);
 
   return (
-    <header className=" bg-gray-100 border-b-2 border-black fixed w-full z-50">
+    <header className=" bg-gray-100 border-b-4 border-black fixed w-full z-50">
       <div className="container max-w-screen-lg mx-auto p-4 flex justify-between items-center">
         <Link href="/" className="text-lg font-medium">
           WONDERSHOP

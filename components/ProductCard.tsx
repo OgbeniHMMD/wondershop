@@ -10,7 +10,7 @@ export default function ProductCard({ product }: { product: ProductType }) {
       />
       <div className="border-t-2 border-black p-2 sm:py-4 bg-gray-100 flex-grow">
         <div className="capitalize text-sm font-medium pb-2">{product.title}</div>
-        <div className="text-xs text-gray-500 font-bold">₦ {(product.price + 1000).toLocaleString()}</div>
+        <div className="text-xs text-gray-500 font-bold">₦ {product.price.toLocaleString()}</div>
       </div>
     </Link>
   );

@@ -40,7 +40,7 @@ export default function Homepage() {
 
   return (
     <div className="container max-w-screen-lg mx-auto">
-      <nav className="flex gap-2 text-gray-500 text-sm px-4">
+      <nav className="flex gap-2 text-gray-500 text-sm p-4">
         <Link href="/" className="text-black hover:underline">
           Home
         </Link>
@@ -52,7 +52,7 @@ export default function Homepage() {
 
       {product ? (
         <>
-          <div className="sm:flex-row flex-col flex gap-8 p-4 pb-8">
+          <div className="sm:flex-row flex-col flex gap-8 p-4 py-8 border-y-4">
             <div className="border-2 border-black h-64 sm:w-64 md:w-96 w-full p-4">
               <div
                 className="bg-contain bg-center bg-no-repeat w-full h-full"
@@ -63,7 +63,7 @@ export default function Homepage() {
             <div className="flex flex-col gap-4 justify-between">
               <div className="">
                 <div className="text-xl font-medium pb-4">{product.title}</div>
-                <div className="font-medium text-sm text-gray-500">₦ {(product.price + 1000).toLocaleString()}</div>
+                <div className="font-medium text-sm text-gray-500">₦ {product.price.toLocaleString()}</div>
               </div>
 
               <div className="flex gap-2 text-sm items-center">
@@ -71,14 +71,14 @@ export default function Homepage() {
                   <>
                     <button
                       onClick={() => setQuantity(quantity > 0 ? quantity - 1 : 0)}
-                      className="p-1 px-4 border border-black font-medium text-lg hover:bg-black hover:text-white"
+                      className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-lg hover:bg-black hover:text-white"
                     >
                       -
                     </button>
                     <p className="p-2">{quantity}</p>
                     <button
                       onClick={() => setQuantity(quantity + 1)}
-                      className="p-1 px-4 border border-black font-medium text-lg hover:bg-black hover:text-white"
+                      className="p-1 px-4 border-2 border-black bg-gray-200 font-medium text-lg hover:bg-black hover:text-white"
                     >
                       +
                     </button>
@@ -94,9 +94,10 @@ export default function Homepage() {
               </div>
             </div>
           </div>
-          <div className="p-4 py-8 border-t">
+
+          <div className="p-4 py-8">
             <h2 className="text-lg font-medium pb-4 text-gray-700 uppercase">Description</h2>
-            <p className="text-gray-500 max-w-lg">{product.description}</p>
+            <p className="text-gray-500 max-w-lg leading-relaxed">{product.description}</p>
           </div>
         </>
       ) : (
