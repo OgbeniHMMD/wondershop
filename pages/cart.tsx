@@ -125,9 +125,12 @@ export default function CartPage() {
                     </div>
                   </div>
 
-                  <button className="p-2 px-4 border-2 border-black font-medium text-white text-sm bg-black hover:bg-black/75 hover:text-white w-full">
+                  <Link
+                    href="/confirm"
+                    className="p-2 px-4 border-2 border-black font-medium text-white text-sm text-center bg-black hover:bg-black/75 hover:text-white block"
+                  >
                     CHECKOUT
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
