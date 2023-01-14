@@ -3,10 +3,12 @@ import { persist } from "zustand/middleware";
 
 export const useCartStore = create(
   persist(
-    (set, get) => ({
+    (set, get: any) => ({
       cartItems: [],
 
-      ADD_CART: (item: CartItemsType) => set({ cartItems: [...get().cartItems, item] }),
+      ADD_CART: (item: CartItemsType) => {
+        set({ cartItems: [...get().cartItems, item] });
+      },
       UPDATE_CART: (cartItems: CartItemsType[]) => set({ cartItems }),
       CLEAR_CART: () => set({ cartItems: [] }),
     }),
