@@ -118,7 +118,7 @@ export default function Homepage() {
                     </div>
                   </div>
 
-                  <button className="p-1 px-4 border-2 border-black font-medium text-white text-sm bg-black hover:bg-black/75 hover:text-white w-full">
+                  <button className="p-2 px-4 border-2 border-black font-medium text-white text-sm bg-black hover:bg-black/75 hover:text-white w-full">
                     CHECKOUT
                   </button>
                 </div>
